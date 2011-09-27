@@ -52,9 +52,15 @@ MainWindow::MainWindow(QWidget *parent)
     _process = new QSpinBox;
     _process->setMinimum(1);
     _process->setMaximum(1024);
+    _process->setValue(Config::PROCESS);
     h2->addWidget(_process);
-
-
+    //LineEdit pour le repertoire de destination
+    QLabel *destLabel = new QLabel(tr("Destination Directory:"));
+    h2->addWidget(destLabel);
+    _dest = new QLineEdit;
+    _dest->setText(tr("TN"));
+    h2->addWidget(_dest);
+    //On ajoute le layout
     layout->addLayout(h2);
 
     //On ajoute la listView et on paramètre son modèle
@@ -103,7 +109,7 @@ void MainWindow::clearImages()
 void MainWindow::convert()
 {
     _bar->setValue(0);
-    _converter->start(_list,QSize(_size->value(),0),_process->value());
+    _converter->start(_list,QSize(_size->value(),0),_process->value(),_dest->text());
     _convert->setEnabled(false);
 }
 /**

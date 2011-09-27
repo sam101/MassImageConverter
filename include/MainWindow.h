@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 #include <Converter.h>
 
+#include <QtGui/QLineEdit>
 #include <QtGui/QListView>
 #include <QtGui/QProgressBar>
 #include <QtGui/QPushButton>
@@ -49,6 +50,10 @@ class MainWindow : public QMainWindow
           * Spinbox contenant le nombre de processus
           */
         QSpinBox *_process;
+        /**
+          * LineEdit contenant le repertoire de déstination
+          */
+        QLineEdit *_dest;
     public:
         /**
           * Constructeur
