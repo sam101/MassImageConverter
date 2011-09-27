@@ -1,7 +1,7 @@
 # Contributor: Sam101 <lepetit.samuel@gmail.com>
 pkgname=massimageconverter
 pkgver=20110927
-pkgrel=1
+pkgrel=2
 pkgdesc="A parallel image converter, with a friendly GUI. Use imagemagick"
 arch=('i686', 'x86_64')
 
