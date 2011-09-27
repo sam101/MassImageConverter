@@ -1,4 +1,5 @@
 #include <Converter.h>
+#include <QtCore/QDir>
 #include <QtCore/QProcess>
 #include <QtCore/QSize>
 #include <QDebug>
@@ -57,6 +58,7 @@ void Converter::launchProcess(QString pathToImage, QSize size)
     QStringList args;
     args << pathToImage << "-resize" << QString::number(size.width()) + "x";
     QString finalPath;
+    QString dir;
     QStringList imagePath = pathToImage.split('/');
     //TODO: Ceci est crade.
     for (int i = 0; i < imagePath.size(); i++)
@@ -67,9 +69,13 @@ void Converter::launchProcess(QString pathToImage, QSize size)
         }
         else
         {
+            dir += imagePath[i] + "/";
             finalPath += imagePath[i] + "/" ;
         }
     }
+    dir += _dest;
+    QDir dirMaker;
+    dirMaker.mkdir(dir);
     args << finalPath;
     qDebug() << args;
     process->start("convert",args);
