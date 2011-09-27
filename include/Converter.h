@@ -40,7 +40,7 @@ class Converter : public QObject
         /**
           * Constructeur
           */
-        Converter();
+        Converter(QObject *parent = 0);
     public slots:
         /**
           * Lance la conversion d'images

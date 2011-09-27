@@ -35,6 +35,18 @@ class MainWindow : public QMainWindow
           * Constructeur
           */
         MainWindow(QWidget *parent = 0);
+        /**
+          * Destructeur
+          */
         ~MainWindow();
+    public slots:
+        /**
+          * Ajoute des images à la liste à convertir
+          */
+        void addImages();
+        /**
+          * Convertit les images à la liste
+          */
+        void convert();
 };
 #endif // MAINWINDOW_H

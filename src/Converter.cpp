@@ -5,7 +5,8 @@
 /**
   * Constructeur
   */
-Converter::Converter() :
+Converter::Converter(QObject *parent) :
+QObject(parent),
 _count(0),
 _max(0)
 {
@@ -55,7 +56,22 @@ void Converter::launchProcess(QString pathToImage, QSize size)
     QProcess *process = new QProcess(this);
     QStringList args;
     args << pathToImage << "-resize" << QString::number(size.width()) + "x";
-    args << _dest + "/" + pathToImage;
+    QString finalPath;
+    QStringList imagePath = pathToImage.split('/');
+    //TODO: Ceci est crade.
+    for (int i = 0; i < imagePath.size(); i++)
+    {
+        if ( i == imagePath.size() - 1)
+        {
+            finalPath += _dest + "/" + imagePath[i];
+        }
+        else
+        {
+            finalPath += imagePath[i] + "/" ;
+        }
+    }
+    args << finalPath;
+    qDebug() << args;
     process->start("convert",args);
     connect(process,SIGNAL(finished(int)),this,SLOT(convertFinished()));
 
