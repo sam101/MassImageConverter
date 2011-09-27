@@ -3,6 +3,7 @@
 #include <Converter.h>
 
 #include <QtGui/QListView>
+#include <QtGui/QProgressBar>
 #include <QtGui/QStringListModel>
 #include <QtGui/QMainWindow>
 /**
@@ -30,6 +31,10 @@ class MainWindow : public QMainWindow
           * Liste contenant les fichiers
           */
         QStringList _list;
+        /**
+          * Pointeur vers la ProgressBar
+          */
+        QProgressBar *_bar;
     public:
         /**
           * Constructeur
@@ -48,5 +53,9 @@ class MainWindow : public QMainWindow
           * Convertit les images à la liste
           */
         void convert();
+        /**
+          * Met à jour la ProgressBar sur le nombre d'images finies
+          */
+        void inProgress(int n);
 };
 #endif // MAINWINDOW_H

@@ -51,7 +51,7 @@ class Converter : public QObject
           */
         void convertFinished();
     signals:
-        void imageHasFinished(qint32 n);
+        void imageHasFinished(int n);
         void taskCompleted();
     protected:
         /**
