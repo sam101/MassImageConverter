@@ -10,7 +10,12 @@
   */
 class Converter : public QObject
 {
+    Q_OBJECT
     protected:
+        /**
+          * Taille de l'image
+          */
+        QSize _size;
         /**
           * Liste des images à convertir
           */
@@ -48,6 +53,11 @@ class Converter : public QObject
     signals:
         void imageHasFinished(qint32 n);
         void taskCompleted();
+    protected:
+        /**
+          * Lance un processus fils qui doit convertir une image
+          */
+        void launchProcess(QString pathToImage, QSize size);
 };
 
 #endif // CONVERTER_H
