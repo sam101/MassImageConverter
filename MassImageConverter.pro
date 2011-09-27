@@ -1,12 +1,6 @@
-#-------------------------------------------------
-#
-# Project created by QtCreator 2011-09-27T14:25:29
-#
-#-------------------------------------------------
-
 QT       += core gui
 INCLUDEPATH += include
-TARGET = MassImageConverter
+TARGET = massImageConverter
 TEMPLATE = app
 
 
