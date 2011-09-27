@@ -1,5 +1,6 @@
 #include <MainWindow.h>
 #include <QtGui/QFileDialog>
+#include <QtGui/QLabel>
 #include <QtGui/QVBoxLayout>
 /**
   * Constructeur
@@ -9,8 +10,8 @@ MainWindow::MainWindow(QWidget *parent)
 {
     _converter = new Converter(this);
     connect(_converter,SIGNAL(imageHasFinished(int)),this,SLOT(inProgress(int)));
-
-    setWindowTitle(tr("MassImageConverter. Par Sam101"));
+    connect(_converter,SIGNAL(taskCompleted()),this,SLOT(endConvert()));
+    setWindowTitle(tr("MassImageConverter. By Sam101"));
     //On construit le layout de la fenêtre.
     QVBoxLayout *layout = new QVBoxLayout;
     QWidget *widget = new QWidget;
@@ -20,17 +21,41 @@ MainWindow::MainWindow(QWidget *parent)
     QHBoxLayout *hbox = new QHBoxLayout;
     layout->addLayout(hbox);
 
-    QPushButton *add = new QPushButton(tr("Ajouter images"));
+    QPushButton *add = new QPushButton(tr("Add images"));
     connect(add,SIGNAL(clicked()),this,SLOT(addImages()));
     hbox->addWidget(add);
 
-    QPushButton *del = new QPushButton(tr("Supprimer"));
+    QPushButton *del = new QPushButton(tr("Delete"));
     connect(del,SIGNAL(clicked()),this,SLOT(clearImages()));
     hbox->addWidget(del);
 
-    _convert = new QPushButton(tr("Convertir"));
+    _convert = new QPushButton(tr("Convert"));
     connect(_convert,SIGNAL(clicked()),this,SLOT(convert()));
     hbox->addWidget(_convert);
+
+    //On ajoute un QHboxLayout pour les paramètres de taille et de nombre de processus
+    QHBoxLayout *h2 = new QHBoxLayout;
+
+    //Label de la taille
+    QLabel *labelSize = new QLabel(tr("Size:"));
+    h2->addWidget(labelSize);
+    //Spinbox de la taille
+    _size = new QSpinBox;
+    _size->setMinimum(1);
+    _size->setMaximum(10000);
+    _size->setValue(Config::SIZE);
+    h2->addWidget(_size);
+    //Label des processus
+    QLabel *labelProcess = new QLabel(tr("Process number:"));
+    h2->addWidget(labelProcess);
+    //Spinbox des processus
+    _process = new QSpinBox;
+    _process->setMinimum(1);
+    _process->setMaximum(1024);
+    h2->addWidget(_process);
+
+
+    layout->addLayout(h2);
 
     //On ajoute la listView et on paramètre son modèle
     _listView = new QListView;
@@ -59,7 +84,7 @@ MainWindow::~MainWindow()
   */
 void MainWindow::addImages()
 {
-    _list += QFileDialog::getOpenFileNames(this,tr("Selectionnez les images à convertir"),QString(),"Images (*.png *.xpm *.jpg)");
+    _list += QFileDialog::getOpenFileNames(this,tr("Select pictures to convert"),QString(),"Images (*.png *.xpm *.jpg)");
     _model->setStringList(_list);
     _bar->setMaximum(_list.size());
     _bar->setValue(0);
@@ -78,7 +103,7 @@ void MainWindow::clearImages()
 void MainWindow::convert()
 {
     _bar->setValue(0);
-    _converter->start(_list,QSize(1000,1000));
+    _converter->start(_list,QSize(_size->value(),0),_process->value());
     _convert->setEnabled(false);
 }
 /**

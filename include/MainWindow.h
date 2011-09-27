@@ -5,6 +5,7 @@
 #include <QtGui/QListView>
 #include <QtGui/QProgressBar>
 #include <QtGui/QPushButton>
+#include <QtGui/QSpinBox>
 #include <QtGui/QStringListModel>
 #include <QtGui/QMainWindow>
 /**
@@ -40,6 +41,14 @@ class MainWindow : public QMainWindow
           * Bouton "Convertir"
           */
         QPushButton *_convert;
+        /**
+          * SpinBox contenant la taille
+          */
+        QSpinBox *_size;
+        /**
+          * Spinbox contenant le nombre de processus
+          */
+        QSpinBox *_process;
     public:
         /**
           * Constructeur

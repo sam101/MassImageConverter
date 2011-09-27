@@ -1,5 +1,6 @@
 #ifndef CONVERTER_H
 #define CONVERTER_H
+#include <Config.h>
 #include <QtCore/QObject>
 #include <QtCore/QSize>
 #include <QtCore/QStringList>
@@ -45,7 +46,7 @@ class Converter : public QObject
         /**
           * Lance la conversion d'images
           */
-        void start(QStringList list, QSize size, int max = 4, QString dest = "TN");
+        void start(QStringList list, QSize size, int max = Config::PROCESS, QString dest = "TN");
         /**
           * Appelé à la fin de conversion d'une image
           */

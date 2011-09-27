@@ -15,6 +15,8 @@ SOURCES += src/main.cpp\
     src/Converter.cpp
 
 HEADERS  += include/MainWindow.h \
-    include/Converter.h
+    include/Converter.h \
+    include/Config.h
+
 
 
