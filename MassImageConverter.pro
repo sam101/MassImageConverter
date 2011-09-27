@@ -1,6 +1,6 @@
 QT       += core gui
 INCLUDEPATH += include
-TARGET = massImageConverter
+TARGET = massimageconverter
 TEMPLATE = app
 CODECFORTR = UTF-8
 

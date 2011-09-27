@@ -5,11 +5,12 @@ pkgrel=1
 pkgdesc="A parallel image converter, with a friendly GUI. Use imagemagick"
 arch=('i686', 'x86_64')
 
-depends=('qt', 'imagemagick')
+depends=('qt' 'imagemagick')
 makedepends=('git')	
 source=()
 md5sums=()
 license=('GPL3')
+url="http://github.com/sam101/MassImageConverter"
 _gitroot="https://github.com/sam101/MassImageConverter.git"
 _gitname="MassImageConverter"
 
