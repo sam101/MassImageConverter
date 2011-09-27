@@ -54,12 +54,16 @@ void Converter::convertFinished()
   */
 void Converter::launchProcess(QString pathToImage, QSize size)
 {
+    //On construit le process
     QProcess *process = new QProcess(this);
+    //On commence à construire les arguments
     QStringList args;
     args << pathToImage << "-resize" << QString::number(size.width()) + "x";
     QString finalPath;
+    //Chemin vers le dossier dans lequel se trouve l'image
     QString dir;
     QStringList imagePath = pathToImage.split('/');
+
     //TODO: Ceci est crade.
     for (int i = 0; i < imagePath.size(); i++)
     {
@@ -73,12 +77,16 @@ void Converter::launchProcess(QString pathToImage, QSize size)
             finalPath += imagePath[i] + "/" ;
         }
     }
+    //On finit de remplir le chemin vers le dossier
     dir += _dest;
+    //On crée le dossier "TN"
     QDir dirMaker;
     dirMaker.mkdir(dir);
+    //On finit de remplir les arguments
     args << finalPath;
-    qDebug() << args;
+    //On lance le processus
     process->start("convert",args);
+    //On connecte au slot.
     connect(process,SIGNAL(finished(int)),this,SLOT(convertFinished()));
 
 }
