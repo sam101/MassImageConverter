@@ -6,7 +6,7 @@
   * Gère la fenêtre principale de l'application
   * @brief Gère la fenêtre principale de l'application
   * @author Samuel L
-
+  */
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
