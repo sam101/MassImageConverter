@@ -1,6 +1,5 @@
 #include <MainWindow.h>
 #include <QtGui/QFileDialog>
-#include <QtGui/QPushButton>
 #include <QtGui/QVBoxLayout>
 /**
   * Constructeur
@@ -11,7 +10,7 @@ MainWindow::MainWindow(QWidget *parent)
     _converter = new Converter(this);
     connect(_converter,SIGNAL(imageHasFinished(int)),this,SLOT(inProgress(int)));
 
-    setWindowTitle(tr("MassImageConverter 1.0"));
+    setWindowTitle(tr("MassImageConverter. Par Sam101"));
     //On construit le layout de la fenêtre.
     QVBoxLayout *layout = new QVBoxLayout;
     QWidget *widget = new QWidget;
@@ -24,12 +23,16 @@ MainWindow::MainWindow(QWidget *parent)
     QPushButton *add = new QPushButton(tr("Ajouter images"));
     connect(add,SIGNAL(clicked()),this,SLOT(addImages()));
     hbox->addWidget(add);
-    QPushButton *del = new QPushButton(tr("Supprimer"));
-    hbox->addWidget(del);
-    QPushButton *convert = new QPushButton(tr("Convertir"));
-    connect(convert,SIGNAL(clicked()),this,SLOT(convert()));
-    hbox->addWidget(convert);
 
+    QPushButton *del = new QPushButton(tr("Supprimer"));
+    connect(del,SIGNAL(clicked()),this,SLOT(clearImages()));
+    hbox->addWidget(del);
+
+    _convert = new QPushButton(tr("Convertir"));
+    connect(_convert,SIGNAL(clicked()),this,SLOT(convert()));
+    hbox->addWidget(_convert);
+
+    //On ajoute la listView et on paramètre son modèle
     _listView = new QListView;
     _model = new QStringListModel;
     _listView->setModel(_model);
@@ -37,9 +40,11 @@ MainWindow::MainWindow(QWidget *parent)
 
     layout->addWidget(_listView);
 
+    //On ajoute la progressBar
     _bar = new QProgressBar;
     layout->addWidget(_bar);
 
+    //On fixe la taille de la barre
     resize(640,480);
 }
 /**
@@ -74,6 +79,7 @@ void MainWindow::convert()
 {
     _bar->setValue(0);
     _converter->start(_list,QSize(1000,1000));
+    _convert->setEnabled(false);
 }
 /**
   * Met à jour la ProgressBar sur le nombre d'images finies
@@ -81,4 +87,12 @@ void MainWindow::convert()
 void MainWindow::inProgress(int n)
 {
     _bar->setValue(n);
+}
+/**
+  * Appelé à la fin du traitement,
+  * Réactive le bouton "Convertir"
+  */
+void MainWindow::endConvert()
+{
+    _convert->setEnabled(true);
 }

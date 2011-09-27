@@ -4,6 +4,7 @@
 
 #include <QtGui/QListView>
 #include <QtGui/QProgressBar>
+#include <QtGui/QPushButton>
 #include <QtGui/QStringListModel>
 #include <QtGui/QMainWindow>
 /**
@@ -35,6 +36,10 @@ class MainWindow : public QMainWindow
           * Pointeur vers la ProgressBar
           */
         QProgressBar *_bar;
+        /**
+          * Bouton "Convertir"
+          */
+        QPushButton *_convert;
     public:
         /**
           * Constructeur
@@ -54,8 +59,17 @@ class MainWindow : public QMainWindow
           */
         void convert();
         /**
+          * Supprime toute les images de la liste
+          */
+        void clearImages();
+        /**
           * Met à jour la ProgressBar sur le nombre d'images finies
           */
         void inProgress(int n);
+        /**
+          * Appelé à la fin du traitement,
+          * Réactive le bouton "Convertir"
+          */
+        void endConvert();
 };
 #endif // MAINWINDOW_H
